@@ -24,12 +24,12 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @GetMapping () //"/getCustomers"
+    @GetMapping ("/id")
     public List<Customer> getCustomers() {
         return customerService.getCustomers();
         }
 
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<Customer> registerNewCustomer (@RequestBody Customer customer) {
         return new ResponseEntity<>(customerService.addNewCustomer(customer), HttpStatus.CREATED) ;
         }
