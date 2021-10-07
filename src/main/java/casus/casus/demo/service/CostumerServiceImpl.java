@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CostumerService {
+public class CostumerServiceImpl implements CustomerService {
 
 
     @Autowired
     CustomerRepository costumerRepository;
 
     @Autowired
-    public CostumerService(CustomerRepository costumerRepository) {
+    public CostumerServiceImpl(CustomerRepository costumerRepository) {
         this.costumerRepository = costumerRepository;
     }
 

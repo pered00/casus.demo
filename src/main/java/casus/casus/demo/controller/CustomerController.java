@@ -1,7 +1,8 @@
 package casus.casus.demo.controller;
 
 import casus.casus.demo.model.Customer;
-import casus.casus.demo.service.CostumerService;
+import casus.casus.demo.service.CostumerServiceImpl;
+import casus.casus.demo.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,22 +15,23 @@ import java.util.List;
 public class CustomerController {
 
    //reference to CustomerService
-    private final CostumerService costumerService;
+    private final CustomerService customerService;
 
-    //Constructor with Dependency Injection from Service (Autowired = customerService variable will be instantiated automatically)
+    //Constructor with Dependency Injection from Service (Autowired = customerSer
+    // vice variable will be instantiated automatically)
     @Autowired
-    public CustomerController(CostumerService costumerService) {
-        this.costumerService = costumerService;
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
     }
 
     @GetMapping () //"/getCustomers"
     public List<Customer> getCustomers() {
-        return costumerService.getCustomers();
+        return customerService.getCustomers();
         }
 
     @PostMapping
     public ResponseEntity<Customer> registerNewCustomer (@RequestBody Customer customer) {
-        return new ResponseEntity<>(costumerService.addNewCustomer(customer), HttpStatus.CREATED) ;
+        return new ResponseEntity<>(customerService.addNewCustomer(customer), HttpStatus.CREATED) ;
         }
 
 
