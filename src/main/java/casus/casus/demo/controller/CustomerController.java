@@ -1,7 +1,6 @@
 package casus.casus.demo.controller;
 
 import casus.casus.demo.model.Customer;
-import casus.casus.demo.service.CostumerServiceImpl;
 import casus.casus.demo.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,12 +23,13 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @GetMapping ("/id")
+    @GetMapping  //id heeft betrekking op een enkel object.
     public List<Customer> getCustomers() {
         return customerService.getCustomers();
         }
 
-    @PostMapping("/")
+
+    @PostMapping
     public ResponseEntity<Customer> registerNewCustomer (@RequestBody Customer customer) {
         return new ResponseEntity<>(customerService.addNewCustomer(customer), HttpStatus.CREATED) ;
         }

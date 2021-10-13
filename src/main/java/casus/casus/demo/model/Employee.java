@@ -1,8 +1,21 @@
 package casus.casus.demo.model;
 
-public class Employee {
+import javax.persistence.*;
 
-    private long EmpID;
+@Entity
+@Table
+public class Employee {
+    @Id
+    @SequenceGenerator(
+            name = "employee_sequence",
+            sequenceName = "employee_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "employee_sequence"
+    )
+    private long id;
     private String name;
     private String function;
     private String email;
@@ -47,7 +60,7 @@ public class Employee {
     @Override
     public String toString() {
         return "Employee{" +
-                "EmpID=" + EmpID +
+                "id=" + this.id +
                 ", name='" + name + '\'' +
                 ", function='" + function + '\'' +
                 ", email='" + email + '\'' +
