@@ -22,6 +22,7 @@ public class Customer {
     private String city;
     private String email;
 
+
     // Constructors
     public Customer (){
     }
