@@ -31,28 +31,28 @@ public class VehicleController {
 //        return service.getByID(id); }
     //GET ID / READ / Find by ID EASY
     @GetMapping("/id/{id}")
-    public Vehicle findObjectById(@PathVariable Long id){
-        return service.getObjectByID(id);
+    public ResponseEntity<Vehicle> findObjectById(@PathVariable Long id){
+        return new ResponseEntity<>(service.getObjectByID(id), HttpStatus.FOUND);
     }
     //GET LicPlate / READ / Find by licPlate
     @GetMapping("/{licPlate}")
-    public Vehicle findObjectByLicPlate(@PathVariable String licPlate){
-        return service.getObjectBylicPlate(licPlate);
+    public ResponseEntity<Vehicle> findObjectByLicPlate(@PathVariable String licPlate){
+        return new ResponseEntity<>(service.getObjectBylicPlate(licPlate), HttpStatus.FOUND);
     }
     //GET ALL / READ
     @GetMapping("/Vehicles")
-    public List<Vehicle> findAllVehicles(){
-        return service.findAll();
+    public ResponseEntity<List<Vehicle>> findAllVehicles(){
+        return new ResponseEntity<>(service.findAll(), HttpStatus.FOUND);
     }
     //UPDATE / PUT
     @PutMapping("/update")
-    public Vehicle updateObject(@RequestBody Vehicle object){
-        return service.checkIfExists(object);
+    public ResponseEntity<Vehicle> updateObject(@RequestBody Vehicle object){
+        return new ResponseEntity<>(service.checkIfExists(object), HttpStatus.OK);
     }
     //DELETE
     @DeleteMapping("/delete/{id}")
-    public String deleteObject(@RequestBody Long id){
-        return service.deleteObject(id);
+    public ResponseEntity<String> deleteObject(@RequestBody Long id){
+        return new ResponseEntity<>(service.deleteObject(id), HttpStatus.OK);
     }
 
 
