@@ -1,8 +1,6 @@
-package casus.casus.demo.service;
+package casus.casus.demo.service.employee;
 
-import casus.casus.demo.model.Customer;
 import casus.casus.demo.model.Employee;
-import casus.casus.demo.repository.CustomerRepository;
 import casus.casus.demo.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

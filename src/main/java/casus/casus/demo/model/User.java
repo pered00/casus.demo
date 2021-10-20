@@ -11,21 +11,26 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="vehicle_tbl")
-public class Vehicle {
+@Table(name="user_tbl")
+public class User {
     @Id
     @SequenceGenerator(
-            name = "vehicle_sequence",
-            sequenceName = "vehicle_sequence",
+            name = "user_sequence",
+            sequenceName = "user_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "vehicle_sequence"
+            generator = "user_sequence"
     )
     private long id;
-    private String licPlate;
-    
+    private String name;
+    private String username;
+    private String password;
+    private boolean active;
+    private String userRole;
 
+//    @Enumerated(EnumType.ORDINAL)
+//    private UserRole userRole;
 
 }

@@ -1,4 +1,4 @@
-package casus.casus.demo.service;
+package casus.casus.demo.service.customer;
 
 import casus.casus.demo.model.Customer;
 import casus.casus.demo.repository.CustomerRepository;

@@ -1,5 +1,6 @@
 package casus.casus.demo.model;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,21 +12,18 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="vehicle_tbl")
-public class Vehicle {
+@Table(name="invoice_tbl")
+public class Invoice {
     @Id
     @SequenceGenerator(
-            name = "vehicle_sequence",
-            sequenceName = "vehicle_sequence",
+            name = "invoice_sequence",
+            sequenceName = "invoice_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "vehicle_sequence"
+            generator = "invoice_sequence"
     )
     private long id;
-    private String licPlate;
-    
-
-
+    private String name;
 }

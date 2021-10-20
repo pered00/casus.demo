@@ -1,7 +1,6 @@
 package casus.casus.demo.service.vehicle;
 
-import casus.casus.demo.dto.VehicleDTO;
-import casus.casus.demo.dto.VehicleMapper;
+
 import casus.casus.demo.model.Vehicle;
 import casus.casus.demo.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;

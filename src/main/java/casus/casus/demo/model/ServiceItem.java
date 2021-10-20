@@ -11,21 +11,22 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="vehicle_tbl")
-public class Vehicle {
+@Table(name="service_item_tbl")
+public class ServiceItem {
     @Id
     @SequenceGenerator(
-            name = "vehicle_sequence",
-            sequenceName = "vehicle_sequence",
+            name = "serviceItem_sequence",
+            sequenceName = "serviceItem_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "vehicle_sequence"
+            generator = "serviceItem_sequence"
     )
     private long id;
-    private String licPlate;
-    
-
+    private String name;
+    //@Size(max = 500)
+    private String description;
+    private double sellingPrice;
 
 }

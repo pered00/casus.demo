@@ -1,9 +1,7 @@
 package casus.casus.demo.controller;
 
-import casus.casus.demo.model.Customer;
 import casus.casus.demo.model.Employee;
-import casus.casus.demo.service.CustomerService;
-import casus.casus.demo.service.EmployeeService;
+import casus.casus.demo.service.employee.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
