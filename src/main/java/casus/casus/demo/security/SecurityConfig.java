@@ -35,6 +35,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 //                        .password(encoder.encode("user"))
 //                        .roles("USER")
 //                        .build();
+// commit regel
 
     }
 
