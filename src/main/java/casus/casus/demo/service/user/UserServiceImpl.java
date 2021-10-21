@@ -1,8 +1,11 @@
 package casus.casus.demo.service.user;
 
 import casus.casus.demo.model.User;
+import casus.casus.demo.model.UserAuthority;
 import casus.casus.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,9 +16,26 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserRepository repository;
+
+
+
+
     //POST / Create
     @Override
     public User saveObject(User object) {
+        PasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
+        String encodedPassword  = passwordEncoder.encode(object.getPassword());
+
+        User user = new User();
+        user.setEnabled(Boolean.TRUE);
+        user.setPassword(encodedPassword);
+        user.setUsername(object.getUsername());
+
+        UserAuthority boardAuthority = new UserAuthority();
+        boardAuthority.setAuthority(object.getAuthority().getAuthority());
+        boardAuthority.setUser(user);
+        user.setAuthority(boardAuthority);
+
         return repository.save(object);
     }
     //POST list / Create list

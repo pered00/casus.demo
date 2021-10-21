@@ -6,13 +6,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="user_tbl")
-public class User {
+@Table(name="user_authorities")
+public class UserAuthority {
+
     @Id
     @SequenceGenerator(
             name = "user_sequence",
@@ -24,13 +26,9 @@ public class User {
             generator = "user_sequence"
     )
     private long id;
-    private String name;
-    private String username;
-    private String password;
-    private boolean enabled;
-
+    private String authority;
     @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="authority_id",referencedColumnName = "id")
-    private UserAuthority authority;
+    @JoinColumn(name="user_id",referencedColumnName = "id")
+    private User user;
 
 }

@@ -26,16 +26,16 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .jdbcAuthentication()
                 .passwordEncoder(encoder)
                 .dataSource(dataSource)
-                .usersByUsernameQuery("select username, password, active from user_tbl where username=?")
-                .authoritiesByUsernameQuery("select username, user_role from user_tbl where username=?");
+                .usersByUsernameQuery(
+                        "SELECT username, password, enabled from users where username = ?")
+                .authoritiesByUsernameQuery(
+                        "SELECT u.username, a.authority " +
+                                "FROM user_authorities a, users u " +
+                                "WHERE u.username = ? " +
+                                "AND u.id = a.user_id"
+                );
 
-//        UserDetails user =
-//                User.builder()
-//                        .username("user")
-//                        .password(encoder.encode("user"))
-//                        .roles("USER")
-//                        .build();
-// commit regel
+
 
     }
 
@@ -45,14 +45,15 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .formLogin()
-                .and()
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/public/**").hasRole("USER")
                 .antMatchers("/public/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/**").permitAll()
+                .antMatchers("/User/addUser").permitAll()
                 .anyRequest()
-                .authenticated();
+                .authenticated()
+                .and()
+                .formLogin();
     }
 }
