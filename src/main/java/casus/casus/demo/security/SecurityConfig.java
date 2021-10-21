@@ -6,6 +6,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.sql.DataSource;
@@ -19,13 +21,26 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         auth
                 .jdbcAuthentication()
-               // .passwordEncoder(new BCryptPasswordEncoder())
+                .passwordEncoder(encoder)
                 .dataSource(dataSource)
-                .usersByUsernameQuery("select username, password, enabled from users where username=?")
-                .authoritiesByUsernameQuery("select username, role from users where username=?");
+                .usersByUsernameQuery("select username, password, active from user_tbl where username=?")
+                .authoritiesByUsernameQuery("select username, user_role from user_tbl where username=?");
+
+//        UserDetails user =
+//                User.builder()
+//                        .username("user")
+//                        .password(encoder.encode("user"))
+//                        .roles("USER")
+//                        .build();
+
     }
+
+
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
