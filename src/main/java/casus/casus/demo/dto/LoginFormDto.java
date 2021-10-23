@@ -7,12 +7,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 @Getter
 @Setter
 public class LoginFormDto {
-    private String username;
+    private String userName;
     private String password;
 
 
 
     public UsernamePasswordAuthenticationToken converter() {
-        return new UsernamePasswordAuthenticationToken(username, password);
+        return new UsernamePasswordAuthenticationToken(userName, password);
     }
 }
