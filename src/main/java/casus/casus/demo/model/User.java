@@ -31,7 +31,7 @@ public class User implements UserDetails {
     )
     private Long id;
     private String name;
-    private String username;
+    private String userName;
     private String password;
     private boolean active;
 
@@ -41,6 +41,11 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.userRole;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.userName;
     }
 
     @Override

@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
+
 @Controller
 public class DocumentController {
 
@@ -32,7 +33,7 @@ public class DocumentController {
         return "Document saved!";
     }
 
-    @GetMapping(value = "/document/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
+    @GetMapping(value = "/download/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
     public @ResponseBody byte[] download(@PathVariable Long id) {
         Document document = repos.findById(id).get();
         return document.content;

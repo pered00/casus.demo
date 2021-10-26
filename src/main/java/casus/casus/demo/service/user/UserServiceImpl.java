@@ -3,6 +3,7 @@ package casus.casus.demo.service.user;
 import casus.casus.demo.model.User;
 import casus.casus.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +17,8 @@ public class UserServiceImpl implements UserService {
     //POST / Create
     @Override
     public User saveObject(User object) {
+        BCryptPasswordEncoder password= new BCryptPasswordEncoder();
+        object.setPassword(password.encode(object.getPassword()));
         return repository.save(object);
     }
     //POST list / Create list
@@ -42,7 +45,7 @@ public class UserServiceImpl implements UserService {
     //UPDATE / PUT
     @Override
     public User checkIfExists (User object){
-        if (Long.valueOf(object.getId()) != null){
+        if (object.getId() != null){
             Optional<User> existingObject= repository.findById(object.getId());
             if (existingObject.isPresent()){
                 return saveObject(object);
