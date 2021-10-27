@@ -49,6 +49,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.POST, "/User/addUser").hasRole("Admin")
 		.antMatchers(HttpMethod.GET, "/User/addUser").hasRole("Mechanic")
 		.antMatchers("/document").permitAll()
+		.antMatchers("/document/*").permitAll()
 		.antMatchers("/download").permitAll()
 		.anyRequest().authenticated()
 		.and().csrf().disable()

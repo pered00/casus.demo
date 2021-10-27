@@ -26,14 +26,14 @@ public class DocumentController {
 
     @PostMapping("/document")
     @ResponseBody
-    public String upload(@RequestParam(name="document") MultipartFile file) throws IOException {
+    public String upload(@RequestParam(name="pdf") MultipartFile file) throws IOException {
         Document document = new Document();
         document.content = file.getBytes();
         repos.save(document);
         return "Document saved!";
     }
 
-    @GetMapping(value = "/download/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
+    @GetMapping(value = "/document/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
     public @ResponseBody byte[] download(@PathVariable Long id) {
         Document document = repos.findById(id).get();
         return document.content;
