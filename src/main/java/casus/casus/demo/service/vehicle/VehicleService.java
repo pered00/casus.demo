@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface VehicleService {
     //POST / Create
-    Vehicle saveObject(Vehicle object);
+    Vehicle saveObject(Vehicle object, Long customerID);
     //POST list / Create list
     List<Vehicle> saveObjects(List<Vehicle> objects);
 //    //GET ID / READ / Find by ID COMPLETE
@@ -15,13 +15,15 @@ public interface VehicleService {
     //GET ID / READ / Find by ID EASY
     Vehicle getObjectByID (Long id);
     //GET LicPlate / READ / Find by licPlate
-    Vehicle getObjectBylicPlate (String licPlate);
+    VehicleDTO getObjectBylicPlate (String licPlate);
     //GET ALL / READ
-    List<Vehicle> findAll();
+    List<VehicleDTO> findAll();
     //UPDATE / PUT
-    Vehicle checkIfExists(Vehicle object);
+    Vehicle updateVehicle(Vehicle object);
     //DELETE
     String deleteObject(long id);
+    //PUT relation
+    void assignDocumentToVehicle(Long documentId, Long vehicleId);
 
 
 }

@@ -1,31 +1,36 @@
 package casus.casus.demo.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
+import java.time.Year;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Entity
 @Table(name="vehicle_tbl")
 public class Vehicle {
     @Id
-    @SequenceGenerator(
-            name = "vehicle_sequence",
-            sequenceName = "vehicle_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "vehicle_sequence"
-    )
-    private long id;
+    @GeneratedValue
+    private Long id;
     private String licPlate;
-    
+    private String brand;
+    private String model;
+    private Year buildYear;
+    private int mileage;
+
+    @OneToOne
+    @JsonIgnore
+    Document document;
+
+    @ManyToOne
+    @JsonIgnore
+    private Customer customer;
+
 
 
 }

@@ -17,8 +17,12 @@ public class Document {
 
     @Id
     @GeneratedValue
-    private Long Id;
+    private Long id;
+    private String licPlate;
 
     @Lob
     public byte[] content;
+
+    @OneToOne(mappedBy = "document")
+    Vehicle vehicle;
 }

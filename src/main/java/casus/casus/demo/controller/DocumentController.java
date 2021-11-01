@@ -2,6 +2,8 @@ package casus.casus.demo.controller;
 
 import casus.casus.demo.model.Document;
 import casus.casus.demo.repository.DocumentRepository;
+import casus.casus.demo.service.document.DocumentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -12,12 +14,9 @@ import java.io.IOException;
 
 @Controller
 public class DocumentController {
+    @Autowired
+    DocumentService service;
 
-    private final DocumentRepository repos;
-
-    public DocumentController(DocumentRepository repos) {
-        this.repos = repos;
-    }
 
     @GetMapping("/document")
     public String upload() {
@@ -26,16 +25,19 @@ public class DocumentController {
 
     @PostMapping("/document")
     @ResponseBody
-    public String upload(@RequestParam(name="document") MultipartFile file) throws IOException {
-        Document document = new Document();
-        document.content = file.getBytes();
-        repos.save(document);
-        return "Document saved!";
+    public String upload(@RequestParam(name="pdf") MultipartFile file, @RequestParam(name="licPlate")String licPlate) throws IOException {
+        if (service.verifyIfLicPlateExists(licPlate)){
+            return "this licPlate already exists";
+        }
+        else{
+            service.saveDocument(file, licPlate);
+            return "Document saved!";
+        }
     }
 
-    @GetMapping(value = "/download/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
-    public @ResponseBody byte[] download(@PathVariable Long id) {
-        Document document = repos.findById(id).get();
+    @GetMapping(value = "/document/{licPlate}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public @ResponseBody byte[] download(@PathVariable String licPlate) {
+        Document document = service.getDocumentByLicPlate(licPlate);
         return document.content;
     }
 }

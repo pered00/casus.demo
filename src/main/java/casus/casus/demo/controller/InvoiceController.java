@@ -10,35 +10,35 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Invoice")
+@RequestMapping("/invoice")
 
 public class InvoiceController {
     @Autowired
     InvoiceService service;
     //POST / Create
-    @PostMapping("/addInvoice")
+    @PostMapping("/create")
     public ResponseEntity<Invoice> addObject(@RequestBody Invoice object){
         return new ResponseEntity<>(service.checkIfExists(object), HttpStatus.CREATED);
     }
     //POST list / Create list
-    @PostMapping("/addInvoices")
+    @PostMapping("/create/list")
     public ResponseEntity<List<Invoice>> addObjects(@RequestBody List<Invoice>objects) {
         return new ResponseEntity<>(service.saveObjects(objects), HttpStatus.CREATED);
     }
     //GET ID / READ / Find by ID EASY
-    @GetMapping("/id/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Invoice> findObjectById(@PathVariable Long id){
-        return new ResponseEntity<>(service.getObjectByID(id), HttpStatus.FOUND);
+        return new ResponseEntity<>(service.getObjectByID(id), HttpStatus.OK);
     }
     //GET ByName/  Read
     @GetMapping("/name")
     public ResponseEntity<Invoice> findObjectByName(@PathVariable String name){
-        return new ResponseEntity<>(service.getByName(name),HttpStatus.FOUND);
+        return new ResponseEntity<>(service.getByName(name),HttpStatus.OK);
     }
     //GET ALL / READ
-    @GetMapping("/Invoices")
+    @GetMapping("/invoices")
     public ResponseEntity<List<Invoice>> findAllInvoices(){
-        return new ResponseEntity<>(service.findAll(), HttpStatus.FOUND);
+        return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
     }
     //UPDATE / PUT
     @PutMapping("/update")

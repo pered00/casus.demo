@@ -10,29 +10,44 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping ("/customers")
+@RequestMapping ("/customer")
 public class CustomerController {
 
-   //reference to CustomerService
-    private final CustomerService customerService;
-
-    //Constructor with Dependency Injection from Service (Autowired = customerSer
-    // vice variable will be instantiated automatically)
     @Autowired
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
+    CustomerService service;
+    //POST / Create
+    @PostMapping("/create")
+    public ResponseEntity<Customer> addObject(@RequestBody Customer object){
+        return new ResponseEntity<>(service.checkIfExists(object), HttpStatus.CREATED);
     }
-
-    @GetMapping  //id heeft betrekking op een enkel object.
-    public List<Customer> getCustomers() {
-        return customerService.getCustomers();
-        }
-
-
-    @PostMapping
-    public ResponseEntity<Customer> registerNewCustomer (@RequestBody Customer customer) {
-        return new ResponseEntity<>(customerService.addNewCustomer(customer), HttpStatus.CREATED) ;
-        }
-
-
+    //POST list / Create list
+    @PostMapping("/create/list")
+    public ResponseEntity<List<Customer>> addObjects(@RequestBody List<Customer>objects) {
+        return new ResponseEntity<>(service.saveObjects(objects), HttpStatus.CREATED);
+    }
+    //GET ID / READ / Find by ID EASY
+    @GetMapping("/{id}")
+    public ResponseEntity<Customer> findObjectById(@PathVariable Long id){
+        return new ResponseEntity<>(service.getObjectByID(id), HttpStatus.OK);
+    }
+    //GET ByName/  Read
+    @GetMapping("/name")
+    public ResponseEntity<Customer> findObjectByName(@PathVariable String name){
+        return new ResponseEntity<>(service.getByName(name),HttpStatus.OK);
+    }
+    //GET ALL / READ
+    @GetMapping("/customers")
+    public ResponseEntity<List<Customer>> findAllCustomers(){
+        return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
+    }
+    //UPDATE / PUT
+    @PutMapping("/update")
+    public ResponseEntity<Customer> updateObject(@RequestBody Customer object){
+        return new ResponseEntity<>(service.checkIfExists(object), HttpStatus.OK);
+    }
+    //DELETE
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteObject(@RequestBody Long id){
+        return new ResponseEntity<>(service.deleteObject(id), HttpStatus.OK);
+    }
 }
