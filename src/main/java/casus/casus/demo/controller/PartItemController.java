@@ -12,14 +12,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/PartItem")
-
 public class PartItemController {
     @Autowired
     PartItemService service;
     //POST / Create
     @PostMapping("/addPartItem")
     public ResponseEntity<PartItem> addObject(@RequestBody PartItem object){
-        return new ResponseEntity<>(service.checkIfExists(object), HttpStatus.CREATED);
+        return new ResponseEntity<>(service.saveObject(object), HttpStatus.CREATED);
     }
     //POST list / Create list
     @PostMapping("/addPartItems")
@@ -29,17 +28,17 @@ public class PartItemController {
     //GET ID / READ / Find by ID EASY
     @GetMapping("/id/{id}")
     public ResponseEntity<PartItem> findObjectById(@PathVariable Long id){
-        return new ResponseEntity<>(service.getObjectByID(id), HttpStatus.FOUND);
+        return new ResponseEntity<>(service.getObjectByID(id), HttpStatus.OK);
     }
     //GET ByName/  Read
     @GetMapping("/name")
     public ResponseEntity<PartItem> findObjectByName(@PathVariable String name){
-        return new ResponseEntity<>(service.getByName(name),HttpStatus.FOUND);
+        return new ResponseEntity<>(service.getByName(name),HttpStatus.OK);
     }
     //GET ALL / READ
     @GetMapping("/PartItems")
     public ResponseEntity<List<PartItem>> findAllPartItems(){
-        return new ResponseEntity<>(service.findAll(), HttpStatus.FOUND);
+        return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
     }
     //UPDATE / PUT
     @PutMapping("/update")

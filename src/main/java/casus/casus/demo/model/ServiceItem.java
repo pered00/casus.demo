@@ -14,18 +14,10 @@ import javax.persistence.*;
 @Table(name="service_item_tbl")
 public class ServiceItem {
     @Id
-    @SequenceGenerator(
-            name = "serviceItem_sequence",
-            sequenceName = "serviceItem_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "serviceItem_sequence"
-    )
+    @GeneratedValue
     private long id;
     private String name;
-    //@Size(max = 500)
+    //Size max = 255
     private String description;
     private double sellingPrice;
 

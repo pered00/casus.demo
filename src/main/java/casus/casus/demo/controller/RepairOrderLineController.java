@@ -17,7 +17,7 @@ public class RepairOrderLineController {
     //POST / Create
     @PostMapping("/addRepairOrderLine")
     public ResponseEntity<RepairOrderLine> addObject(@RequestBody RepairOrderLine object){
-        return new ResponseEntity<>(service.checkIfExists(object), HttpStatus.CREATED);
+        return new ResponseEntity<>(service.saveObject(object), HttpStatus.CREATED);
     }
     //POST list / Create list
     @PostMapping("/addRepairOrderLines")

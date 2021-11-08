@@ -12,11 +12,17 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name="Part_tbl")
-public class PartItem extends ServiceItem {
-
+public class PartItem {
+    @Id
+    @GeneratedValue
+    private long id;
+    private String name;
+    private String description;
+    private double sellingPrice;
     private double purchasingPrice;
     private String supplier;
     private int stockQuantity;
+
 
 
 }

@@ -52,7 +52,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 		.antMatchers("/vehicle/**").permitAll()
 		.antMatchers("/customer/**").permitAll()
 		.antMatchers("/download").permitAll()
-		.anyRequest().authenticated()
+		//.anyRequest().authenticated()
 		.and().csrf().disable()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and().addFilterBefore(new AuthenticationByTokenFilter(tokenService, userRepository), UsernamePasswordAuthenticationFilter.class);

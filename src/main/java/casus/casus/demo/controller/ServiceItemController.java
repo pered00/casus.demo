@@ -19,7 +19,7 @@ public class ServiceItemController {
     //POST / Create
     @PostMapping("/addServiceItem")
     public ResponseEntity<ServiceItem> addObject(@RequestBody ServiceItem object){
-        return new ResponseEntity<>(service.checkIfExists(object), HttpStatus.CREATED);
+        return new ResponseEntity<>(service.saveObject(object), HttpStatus.CREATED);
     }
     //POST list / Create list
     @PostMapping("/addServiceItems")
