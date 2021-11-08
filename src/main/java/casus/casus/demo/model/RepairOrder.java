@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,17 +17,22 @@ import javax.persistence.*;
 @Table(name="repair_order_tbl")
 public class RepairOrder {
     @Id
-    @SequenceGenerator(
-            name = "repairOrder_sequence",
-            sequenceName = "repairOrder_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "repairOrder_sequence"
-    )
+    @GeneratedValue
     private long id;
     private String name;
+    private LocalDate startDate;
+    private LocalDate inspectionDate;
+    private LocalDate repairDate;
+    private String findings;
+    @Lob
+    private String agreementNotes;
+    @OneToOne
+    private Customer customer;
+    @OneToOne Vehicle vehicle;
+    @OneToMany(mappedBy = "repairOrder")
+    private List<RepairOrderLine> orderLines;
+
+
 
 
 }

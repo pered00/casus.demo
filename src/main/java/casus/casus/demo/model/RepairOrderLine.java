@@ -25,6 +25,8 @@ public class RepairOrderLine {
     )
     private long id;
     private String name;
+    @ManyToOne
+    private RepairOrder repairOrder;
 
 
 }
