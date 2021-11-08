@@ -17,5 +17,5 @@ public interface RepairOrderService {
     //UPDATE / PUT
     RepairOrder checkIfExists(RepairOrder object);
     //DELETE
-    String deleteObject(long id);
+    String deleteObject(Long id);
 }

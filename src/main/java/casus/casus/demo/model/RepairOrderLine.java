@@ -26,14 +26,15 @@ public class RepairOrderLine {
             generator = "repairOrderLine_sequence"
     )
     private long id;
-    private String name;
     @ManyToOne
     private RepairOrder repairOrder;
 
-    @ManyToMany
-    private List<PartItem> usedItems;
-    @ManyToMany
-    private List<ServiceItem> usedServices;
-    //@Embeddable
+    @ManyToOne
+    @JoinColumn(name= "usedItems", referencedColumnName = "id")
+    private PartItem usedItems;
+    @ManyToOne
+    @JoinColumn(name= "usedServices", referencedColumnName = "id")
+    private ServiceItem usedServices;
+
 
 }

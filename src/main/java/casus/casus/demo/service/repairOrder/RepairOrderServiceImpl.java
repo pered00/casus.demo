@@ -57,7 +57,7 @@ public class RepairOrderServiceImpl implements RepairOrderService {
     }
     //DELETE
     @Override
-    public String deleteObject(long id) {
+    public String deleteObject(Long id) {
         repository.deleteById(id);
         return "Object removed!"+id;
     }

@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,8 +19,7 @@ import java.util.List;
 public class RepairOrder {
     @Id
     @GeneratedValue
-    private long id;
-    private String name;
+    private Long id;
     private LocalDate startDate;
     private LocalDate inspectionDate;
     private LocalDate repairDate;
@@ -28,9 +28,12 @@ public class RepairOrder {
     private String agreementNotes;
     @OneToOne
     private Customer customer;
-    @OneToOne Vehicle vehicle;
-    @OneToMany(mappedBy = "repairOrder")
-    private List<RepairOrderLine> orderLines;
+    @OneToOne
+    Vehicle vehicle;
+    @OneToMany
+    private List<PartItemOrderList> usedItems;
+    @OneToMany
+    private List<ServiceItemOrderList> usedServices;
 
 
 

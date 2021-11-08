@@ -17,7 +17,6 @@ public class ServiceItem {
     @GeneratedValue
     private long id;
     private String name;
-    //Size max = 255
     private String description;
     private double sellingPrice;
 
