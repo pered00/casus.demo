@@ -65,7 +65,7 @@ public class VehicleController {
         return new ResponseEntity<>(service.deleteObject(id), HttpStatus.OK);
     }
 
-    //PUT
+    //Assign Document to Vehicle
     @PutMapping("{id}/document")
     public void assignDocumentToVehicle(@PathVariable("id")Long vehicleId, @RequestBody Long documentId) {
         service.assignDocumentToVehicle(documentId, vehicleId);

@@ -10,8 +10,6 @@ public interface InvoiceService {
     List<Invoice> saveObjects(List<Invoice> objects);
     //GET ID / READ / Find by ID EASY
     Invoice getObjectByID (Long id);
-    //GET ByName/  Read
-    Invoice getByName(String name);
     //GET ALL / READ
     List<Invoice> findAll();
     //UPDATE / PUT

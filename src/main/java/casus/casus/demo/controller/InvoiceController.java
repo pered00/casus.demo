@@ -30,11 +30,6 @@ public class InvoiceController {
     public ResponseEntity<Invoice> findObjectById(@PathVariable Long id){
         return new ResponseEntity<>(service.getObjectByID(id), HttpStatus.OK);
     }
-    //GET ByName/  Read
-    @GetMapping("/name")
-    public ResponseEntity<Invoice> findObjectByName(@PathVariable String name){
-        return new ResponseEntity<>(service.getByName(name),HttpStatus.OK);
-    }
     //GET ALL / READ
     @GetMapping("/invoices")
     public ResponseEntity<List<Invoice>> findAllInvoices(){

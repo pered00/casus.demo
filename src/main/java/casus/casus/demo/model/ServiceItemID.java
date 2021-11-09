@@ -1,6 +1,8 @@
 package casus.casus.demo.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 
 import javax.persistence.Embeddable;
@@ -11,6 +13,7 @@ import java.io.Serializable;
 @Embeddable
 @Getter
 @Setter
+@NoArgsConstructor
 public class ServiceItemID implements Serializable {
 
     @ManyToOne

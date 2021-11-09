@@ -18,6 +18,7 @@ public class RepairOrderLineServiceImpl implements RepairOrderLineService {
     public RepairOrderLine saveObject(RepairOrderLine object) {
         return repository.save(object);
     }
+
     //POST list / Create list
     @Override
     public List<RepairOrderLine> saveObjects(List<RepairOrderLine> objects) {
@@ -29,16 +30,13 @@ public class RepairOrderLineServiceImpl implements RepairOrderLineService {
     public RepairOrderLine getObjectByID (Long id){
         return repository.findById(id).orElse(null);
     }
-    //GET ByName/ READ
-    @Override
-    public RepairOrderLine getByName(String name){
-        return repository.findByName(name);
-    }
+
     //GET ALL / READ
     @Override
     public List<RepairOrderLine> findAll() {
         return repository.findAll();
     }
+
     //UPDATE / PUT
     @Override
     public RepairOrderLine checkIfExists (RepairOrderLine object){
@@ -55,6 +53,7 @@ public class RepairOrderLineServiceImpl implements RepairOrderLineService {
             return saveObject(object);
         }
     }
+
     //DELETE
     @Override
     public String deleteObject(long id) {

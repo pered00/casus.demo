@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RepairOrderRepository extends JpaRepository<RepairOrder, Long> {
-    RepairOrder findByName(String Name);
+
 }

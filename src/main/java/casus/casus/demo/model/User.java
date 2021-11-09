@@ -20,15 +20,7 @@ import java.util.List;
 @Table(name="user_tbl")
 public class User implements UserDetails {
     @Id
-    @SequenceGenerator(
-            name = "user_sequence",
-            sequenceName = "user_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "user_sequence"
-    )
+    @GeneratedValue
     private Long id;
     private String name;
     private String userName;

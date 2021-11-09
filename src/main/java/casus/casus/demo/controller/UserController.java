@@ -28,17 +28,17 @@ public class UserController {
     //GET ID / READ / Find by ID EASY
     @GetMapping("/id/{id}")
     public ResponseEntity<User> findObjectById(@PathVariable Long id){
-        return new ResponseEntity<>(service.getObjectByID(id), HttpStatus.FOUND);
+        return new ResponseEntity<>(service.getObjectByID(id), HttpStatus.OK);
     }
     //GET ByName/  Read
     @GetMapping("/name")
     public ResponseEntity<User> findObjectByName(@PathVariable String name){
-        return new ResponseEntity<>(service.getByName(name),HttpStatus.FOUND);
+        return new ResponseEntity<>(service.getByName(name),HttpStatus.OK);
     }
     //GET ALL / READ
     @GetMapping("/Users")
     public ResponseEntity<List<User>> findAllUsers(){
-        return new ResponseEntity<>(service.findAll(), HttpStatus.FOUND);
+        return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
     }
     //UPDATE / PUT
     @PutMapping("/update")

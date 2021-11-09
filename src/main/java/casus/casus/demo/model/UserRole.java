@@ -16,7 +16,7 @@ import javax.persistence.*;
 @Table(name="user_role_tbl")
 public class UserRole implements GrantedAuthority {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
     private String role;
 

@@ -18,6 +18,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     public Invoice saveObject(Invoice object) {
         return repository.save(object);
     }
+
     //POST list / Create list
     @Override
     public List<Invoice> saveObjects(List<Invoice> objects) {
@@ -29,16 +30,13 @@ public class InvoiceServiceImpl implements InvoiceService {
     public Invoice getObjectByID (Long id){
         return repository.findById(id).orElse(null);
     }
-    //GET ByName/ READ
-    @Override
-    public Invoice getByName(String name){
-        return repository.findByName(name);
-    }
+
     //GET ALL / READ
     @Override
     public List<Invoice> findAll() {
         return repository.findAll();
     }
+
     //UPDATE / PUT
     @Override
     public Invoice checkIfExists (Invoice object){
@@ -55,6 +53,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             return saveObject(object);
         }
     }
+
     //DELETE
     @Override
     public String deleteObject(long id) {

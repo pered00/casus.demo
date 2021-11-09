@@ -18,7 +18,11 @@ public class CustomerController {
     //POST / Create
     @PostMapping("/create")
     public ResponseEntity<Customer> addObject(@RequestBody Customer object){
-        return new ResponseEntity<>(service.checkIfExists(object), HttpStatus.CREATED);
+        return new ResponseEntity<>(service.saveObject(object), HttpStatus.CREATED);
+
+        //return new ResponseEntity<>(service.checkIfExists(object), HttpStatus.CREATED);
+
+
     }
     //POST list / Create list
     @PostMapping("/create/list")

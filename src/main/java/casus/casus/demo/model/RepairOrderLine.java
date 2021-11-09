@@ -16,16 +16,8 @@ import java.util.List;
 @Table(name="repair_order_line_tbl")
 public class RepairOrderLine {
     @Id
-    @SequenceGenerator(
-            name = "repairOrderLine_sequence",
-            sequenceName = "repairOrderLine_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "repairOrderLine_sequence"
-    )
-    private long id;
+    @GeneratedValue
+    private Long id;
     @ManyToOne
     private RepairOrder repairOrder;
 

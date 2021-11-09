@@ -29,11 +29,7 @@ public class RepairOrderLineController {
     public ResponseEntity<RepairOrderLine> findObjectById(@PathVariable Long id){
         return new ResponseEntity<>(service.getObjectByID(id), HttpStatus.FOUND);
     }
-    //GET ByName/  Read
-    @GetMapping("/name")
-    public ResponseEntity<RepairOrderLine> findObjectByName(@PathVariable String name){
-        return new ResponseEntity<>(service.getByName(name),HttpStatus.FOUND);
-    }
+
     //GET ALL / READ
     @GetMapping("/RepairOrderLines")
     public ResponseEntity<List<RepairOrderLine>> findAllRepairOrderLines(){

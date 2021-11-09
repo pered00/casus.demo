@@ -12,8 +12,6 @@ public interface RepairOrderLineService {
     List<RepairOrderLine> saveObjects(List<RepairOrderLine> objects);
     //GET ID / READ / Find by ID EASY
     RepairOrderLine getObjectByID (Long id);
-    //GET ByName/  Read
-    RepairOrderLine getByName(String name);
     //GET ALL / READ
     List<RepairOrderLine> findAll();
     //UPDATE / PUT

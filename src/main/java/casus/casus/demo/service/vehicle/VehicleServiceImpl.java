@@ -23,8 +23,9 @@ public class VehicleServiceImpl implements VehicleService{
     DocumentRepository documentRepository;
     @Autowired
     CustomerRepository customerRepository;
+
     //POST / Create
-    // Before creating Vehicle, check if Customer exists. If not use exception to return error, customer must be created first
+    // Before creating Vehicle, check if Customer exists. If not use exception to return error "customer must be created first"
     @Override
     public Vehicle saveObject(Vehicle object, Long customerID) {
         Optional<Customer> checkIfCustomerExists = customerRepository.findById(customerID);
@@ -36,17 +37,13 @@ public class VehicleServiceImpl implements VehicleService{
         }
         return repository.save(object);
             }
+
     //POST list / Create list
     @Override
     public List<Vehicle> saveObjects(List<Vehicle> objects) {
         return repository.saveAll(objects);
     }
-//    //GET ID / READ / Find by ID
-//    @Override
-//    public VehicleDTO getByID(Long id) {
-//        Vehicle vehicle= repository.findById(id).get();
-//        VehicleDTO varDTO= VehicleMapper.createDTOFromEntity(vehicle);
-//        return varDTO;
+
     //GET ID / READ / Find by ID EASY
     public Vehicle getObjectByID (Long id){
         return repository.findById(id).orElse(null);
@@ -66,7 +63,8 @@ public class VehicleServiceImpl implements VehicleService{
         );
         return v2;
     }
-    //    GET ALL / READ
+
+    //GET ALL / READ
     @Override
     public List<VehicleDTO> findAll() {
         List<Vehicle> vlist = repository.findAll();
@@ -81,7 +79,6 @@ public class VehicleServiceImpl implements VehicleService{
         return dList;
     }
 
-
     //UPDATE / PUT
     @Override
     public Vehicle updateVehicle (Vehicle object) {
@@ -95,12 +92,14 @@ public class VehicleServiceImpl implements VehicleService{
         }
         return null;
     }
+
     //DELETE
     @Override
     public String deleteObject(long id) {
         repository.deleteById(id);
         return "Object removed!"+id;
     }
+
     //PUT
     @Override
     public void assignDocumentToVehicle(Long documentId, Long vehicleId) {
