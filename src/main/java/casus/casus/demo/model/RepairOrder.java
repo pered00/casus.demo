@@ -29,6 +29,11 @@ public class RepairOrder {
     private String agreementNotes;
     @OneToOne
     private Customer customer;
+    private Double totalPriceExTax;
+    private Double totalPriceInTax;
+    private Double totalTaxAmount;
+
+
     @OneToOne
     private Vehicle vehicle;
     @OneToMany(mappedBy = "id.partItem")

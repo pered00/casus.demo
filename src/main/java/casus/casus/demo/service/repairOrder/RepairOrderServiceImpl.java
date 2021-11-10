@@ -1,13 +1,12 @@
 package casus.casus.demo.service.repairOrder;
 
 import casus.casus.demo.dto.RepairOrderDTO;
-import casus.casus.demo.model.PartItemOrderList;
-import casus.casus.demo.model.RepairOrder;
-import casus.casus.demo.model.ServiceItemOrderList;
+import casus.casus.demo.model.*;
 import casus.casus.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +26,8 @@ public class RepairOrderServiceImpl implements RepairOrderService {
 
 
     //POST / Create
+    // DTO omdat  in repairorder heeft [] partitemsorderlist, kan niet in database, partItemOrderList is een tussentabel, multi foringkey/
+
     @Override
     public RepairOrderDTO saveObject(RepairOrderDTO object) {
         object.setCustomer(customerRepository.findById(object.getCustomer().getId()).get());
@@ -41,29 +42,37 @@ public class RepairOrderServiceImpl implements RepairOrderService {
         repairOrder.setCustomer(object.getCustomer());
         repairOrder.setVehicle(object.getVehicle());
 
+        if (object.getId() != null){
+            repairOrder.setId(object.getId());
+        }
         repairOrder = repository.save(repairOrder);
         object.setId(repairOrder.getId());
 
         final RepairOrder r = repairOrder;
-        if(object.getUsedItems().size()>0){
-            object.getUsedItems().forEach(obj -> {
-                PartItemOrderList partItemOrderList = new PartItemOrderList();
-                partItemOrderList.getId().setPartItem(obj);
-                partItemOrderList.getId().setRepairOrder(r);
+        object.getUsedItems().forEach(obj -> {
+            PartItemOrderList partItemOrderList = new PartItemOrderList();
+            PartItemID partItemID = new PartItemID();
 
-                partItemOrderListRepository.save(partItemOrderList);
-            });
-        }
+            partItemID.setPartItem(obj);
+            partItemID.setRepairOrder(r);
 
-        if(object.getUsedServices().size()>0) {
-            object.getUsedServices().forEach(obj -> {
-                ServiceItemOrderList serviceItemOrderList = new ServiceItemOrderList();
-                serviceItemOrderList.getId().setServiceItem(obj);
-                serviceItemOrderList.getId().setRepairOrder(r);
-                serviceItemOrderListRepository.save(serviceItemOrderList);
-            });
-        }
-        return object;
+            partItemOrderList.setId(partItemID);
+
+            partItemOrderListRepository.save(partItemOrderList);
+        });
+
+        object.getUsedServices().forEach(obj ->{
+            ServiceItemOrderList serviceItemOrderList = new ServiceItemOrderList();
+            ServiceItemID serviceItemID = new ServiceItemID();
+
+            serviceItemID.setServiceItem(obj);
+            serviceItemID.setRepairOrder(r);
+
+            serviceItemOrderList.setId(serviceItemID);
+
+            serviceItemOrderListRepository.save(serviceItemOrderList);
+        });
+                return object;
     }
     //POST list / Create list
     @Override
@@ -73,8 +82,38 @@ public class RepairOrderServiceImpl implements RepairOrderService {
 
     //GET ID / READ / Find by ID EASY
     @Override
-    public RepairOrder getObjectByID (Long id){
-        return repository.findById(id).orElse(null);
+    public RepairOrderDTO getObjectByID (Long id){
+        final Double taxRate = 1.21;
+        List<Double> sumValue = new ArrayList<>();
+        RepairOrder repairOrder = repository.findById(id).orElse(null);
+        RepairOrderDTO repairOrderDTO = new RepairOrderDTO();
+        repairOrderDTO.setId(repairOrder.getId());
+        repairOrderDTO.setCustomer(repairOrder.getCustomer());
+        repairOrderDTO.setVehicle(repairOrder.getVehicle());
+        repairOrderDTO.setStartDate(repairOrder.getStartDate());
+        repairOrderDTO.setStatus(repairOrder.getStatus());
+        repairOrderDTO.setInspectionDate(repairOrder.getInspectionDate());
+        repairOrderDTO.setRepairDate(repairOrder.getRepairDate());
+        repairOrderDTO.setFindings(repairOrder.getFindings());
+        repairOrderDTO.setAgreementNotes(repairOrder.getAgreementNotes());
+        List<PartItem> partItemsList= new ArrayList<>();
+        repairOrderDTO.setTotalPriceExTax(0.0);
+        repairOrder.getUsedItems().forEach(obj ->{
+           sumValue.add(obj.getId().getPartItem().getSellingPrice());
+           partItemsList.add(obj.getId().getPartItem());
+        });
+           repairOrderDTO.setUsedItems(partItemsList);
+        List<ServiceItem> serviceItemsList= new ArrayList<>();
+        repairOrder.getUsedServices().forEach(obj ->{
+            sumValue.add(obj.getId().getServiceItem().getSellingPrice());
+            serviceItemsList.add(obj.getId().getServiceItem());
+        });
+        repairOrderDTO.setUsedServices(serviceItemsList);
+        sumValue.forEach(value -> {
+            repairOrderDTO.setTotalPriceExTax(repairOrderDTO.getTotalPriceExTax()+value);
+        });
+        repairOrderDTO.setTotalPriceExTax(repairOrderDTO.getTotalPriceExTax()*taxRate);
+        return repairOrderDTO;
     }
 
     //GET ALL / READ

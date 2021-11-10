@@ -11,18 +11,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/ServiceItem")
+@RequestMapping("/service")
 
 public class ServiceItemController {
     @Autowired
     ServiceItemService service;
     //POST / Create
-    @PostMapping("/addServiceItem")
+    @PostMapping("/create")
     public ResponseEntity<ServiceItem> addObject(@RequestBody ServiceItem object){
         return new ResponseEntity<>(service.saveObject(object), HttpStatus.CREATED);
     }
     //POST list / Create list
-    @PostMapping("/addServiceItems")
+    @PostMapping("/create/list")
     public ResponseEntity<List<ServiceItem>> addObjects(@RequestBody List<ServiceItem>objects) {
         return new ResponseEntity<>(service.saveObjects(objects), HttpStatus.CREATED);
     }
@@ -32,17 +32,17 @@ public class ServiceItemController {
         return new ResponseEntity<>(service.getObjectByID(id), HttpStatus.FOUND);
     }
     //GET ByName/  Read
-    @GetMapping("/name")
+    @GetMapping("/name/{name}")
     public ResponseEntity<ServiceItem> findObjectByName(@PathVariable String name){
         return new ResponseEntity<>(service.getByName(name),HttpStatus.FOUND);
     }
     //GET ALL / READ
-    @GetMapping("/ServiceItems")
+    @GetMapping("/all")
     public ResponseEntity<List<ServiceItem>> findAllServiceItems(){
         return new ResponseEntity<>(service.findAll(), HttpStatus.FOUND);
     }
     //UPDATE / PUT
-    @PutMapping("/update")
+    @PutMapping("/update/{id}")
     public ResponseEntity<ServiceItem> updateObject(@RequestBody ServiceItem object){
         return new ResponseEntity<>(service.checkIfExists(object), HttpStatus.OK);
     }

@@ -14,13 +14,13 @@ import java.io.IOException;
 public class DocumentServiceImpl implements DocumentService{
 
     @Autowired
-    private  DocumentRepository repository;
+    private  DocumentRepository documentRepository;
     @Autowired
-    private VehicleRepository vRepository;
+    private VehicleRepository vehicleRepository;
 
     @Override
     public Document getDocumentByLicPlate(String licPlate) {
-        return repository.findByLicPlate(licPlate);
+        return documentRepository.findByLicPlate(licPlate);
     }
 
     @Override
@@ -28,18 +28,18 @@ public class DocumentServiceImpl implements DocumentService{
         Document document = new Document();
         document.setLicPlate(licPlate);
         document.content = file.getBytes();
-        document=repository.save(document);
+        document= documentRepository.save(document);
         pairDocumentVehicle(licPlate,document);
     }
 
     private void pairDocumentVehicle(String licPlate, Document document){
-        Vehicle v=vRepository.findByLicPlate(licPlate);
-        v.setDocument(document);
-        vRepository.save(v);
+        Vehicle existingVehicle= vehicleRepository.findByLicPlate(licPlate);
+        existingVehicle.setDocument(document);
+        vehicleRepository.save(existingVehicle);
     }
     @Override
     public boolean verifyIfLicPlateExists(String licPlate){
-        Document document= repository.findByLicPlate(licPlate);
+        Document document= documentRepository.findByLicPlate(licPlate);
         if (document != null){
             return true;
         }

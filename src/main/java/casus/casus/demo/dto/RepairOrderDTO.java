@@ -27,7 +27,8 @@ public class RepairOrderDTO {
     private Vehicle vehicle;
     private List<PartItem> usedItems;
     private List<ServiceItem> usedServices;
-
-
+    private Double totalPriceExTax;
+    private Double totalPriceInTax;
+    private Double totalTaxAmount;
 
 }

@@ -15,9 +15,9 @@ public interface VehicleService {
     //GET ID / READ / Find by ID EASY
     Vehicle getObjectByID (Long id);
     //GET LicPlate / READ / Find by licPlate
-    VehicleDTO getObjectBylicPlate (String licPlate);
+    Vehicle getObjectBylicPlate (String licPlate);
     //GET ALL / READ
-    List<VehicleDTO> findAll();
+    List<Vehicle> findAll();
     //UPDATE / PUT
     Vehicle updateVehicle(Vehicle object);
     //DELETE

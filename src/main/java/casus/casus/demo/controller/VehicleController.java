@@ -16,8 +16,10 @@ import java.util.List;
 public class VehicleController {
     @Autowired
     VehicleService service;
-    //POST / Create
-    // Before creating Vehicle, check if Customer exists. If not use exception to return error, customer must be created first
+
+    // Create (post)
+    // * Before creating Vehicle, check if Customer exists.
+    // * If not use exception to return error, customer must be created first
     @PostMapping("/create/{customerID}")
     public ResponseEntity<?> addObject(@RequestBody Vehicle object, @PathVariable Long customerID){
         Vehicle vehicle = service.saveObject(object, customerID);
@@ -28,29 +30,28 @@ public class VehicleController {
             return new ResponseEntity<>("CustomerID not found, customer must be created before vehicle", HttpStatus.NOT_FOUND);
         }
     }
-//    //POST list / Create list
-//    @PostMapping("/create_list")
-//    public ResponseEntity<List<Vehicle>> addObjects(@RequestBody List<Vehicle>objects) {
-//        return new ResponseEntity<>(service.saveObjects(objects), HttpStatus.CREATED);
-//    }
-    //GET ID / READ / Find by ID
+    //GET ID
     @GetMapping("/id/{id}")
     public ResponseEntity<Vehicle> findObjectById(@PathVariable Long id){
         return new ResponseEntity<>(service.getObjectByID(id), HttpStatus.OK);
     }
-    //GET /READ by LicPlate
+    //GET LicPlate
     @GetMapping("/licPlate/{licPlate}")
-    public ResponseEntity<VehicleDTO>findObjectByLicPlate(@PathVariable String licPlate){
+    public ResponseEntity<Vehicle>findObjectByLicPlate(@PathVariable String licPlate){
         return  new ResponseEntity<>(service.getObjectBylicPlate(licPlate),HttpStatus.OK);
     }
-    //GET ALL / READ
-    @GetMapping("/vehicles")
-    public ResponseEntity<List<VehicleDTO>> findAllVehicles(){
+    //GET ALL
+    @GetMapping("/all")
+    public ResponseEntity<List<Vehicle>> findAllVehicles(){
         return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
     }
     //UPDATE / PUT
-    @PutMapping("/update")
-    public ResponseEntity<?> updateObject(@RequestBody Vehicle object){
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Vehicle> updateObject(@RequestBody Vehicle object, @PathVariable Long id){
+        return new ResponseEntity<>(service.updateVehicle(object), HttpStatus.OK);
+
+    }
+        /*
         Vehicle vehicle = service.updateVehicle(object);
         if (vehicle != null){
             return new ResponseEntity<>(vehicle, HttpStatus.OK);
@@ -59,6 +60,8 @@ public class VehicleController {
             return new ResponseEntity<>("VehicleID doesn't exists, Vehicle update not possible", HttpStatus.NOT_FOUND);
         }
     }
+
+         */
     //DELETE
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteObject(@RequestBody Long id){

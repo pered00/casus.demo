@@ -1,5 +1,6 @@
 package casus.casus.demo.model;
 
+import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,6 +23,8 @@ public class Customer {
     private String address;
     private String zipcode;
     private String city;
+    @Column(unique = true)
+    @NotNull
     private String email;
     @OneToMany(mappedBy = "customer")
     private List<Vehicle> vehicles;

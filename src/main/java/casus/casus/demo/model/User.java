@@ -1,5 +1,6 @@
 package casus.casus.demo.model;
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,8 @@ public class User implements UserDetails {
     @GeneratedValue
     private Long id;
     private String name;
+    @Column(unique = true)
+    @NotNull
     private String userName;
     private String password;
     private boolean active;

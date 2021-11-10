@@ -10,18 +10,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/User")
+@RequestMapping("/user")
 
 public class UserController {
     @Autowired
     UserService service;
     //POST / Create
-    @PostMapping("/addUser")
+    @PostMapping("/create")
     public ResponseEntity<User> addObject(@RequestBody User object){
         return new ResponseEntity<>(service.checkIfExists(object), HttpStatus.CREATED);
     }
     //POST list / Create list
-    @PostMapping("/addUsers")
+    @PostMapping("/create/list")
     public ResponseEntity<List<User>> addObjects(@RequestBody List<User>objects) {
         return new ResponseEntity<>(service.saveObjects(objects), HttpStatus.CREATED);
     }
@@ -31,17 +31,17 @@ public class UserController {
         return new ResponseEntity<>(service.getObjectByID(id), HttpStatus.OK);
     }
     //GET ByName/  Read
-    @GetMapping("/name")
+    @GetMapping("/name/{name}")
     public ResponseEntity<User> findObjectByName(@PathVariable String name){
         return new ResponseEntity<>(service.getByName(name),HttpStatus.OK);
     }
     //GET ALL / READ
-    @GetMapping("/Users")
+    @GetMapping("/all")
     public ResponseEntity<List<User>> findAllUsers(){
         return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
     }
     //UPDATE / PUT
-    @PutMapping("/update")
+    @PutMapping("/update/{id}")
     public ResponseEntity<User> updateObject(@RequestBody User object){
         return new ResponseEntity<>(service.checkIfExists(object), HttpStatus.OK);
     }

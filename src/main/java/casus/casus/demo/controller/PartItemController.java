@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/PartItem")
+@RequestMapping("/part")
 public class PartItemController {
     @Autowired
     PartItemService service;
     //POST / Create
-    @PostMapping("/addPartItem")
+    @PostMapping("/create")
     public ResponseEntity<PartItem> addObject(@RequestBody PartItem object){
         return new ResponseEntity<>(service.saveObject(object), HttpStatus.CREATED);
     }
     //POST list / Create list
-    @PostMapping("/addPartItems")
+    @PostMapping("/create/list")
     public ResponseEntity<List<PartItem>> addObjects(@RequestBody List<PartItem>objects) {
         return new ResponseEntity<>(service.saveObjects(objects), HttpStatus.CREATED);
     }
@@ -31,18 +31,18 @@ public class PartItemController {
         return new ResponseEntity<>(service.getObjectByID(id), HttpStatus.OK);
     }
     //GET ByName/  Read
-    @GetMapping("/name")
+    @GetMapping("/name/{name}")
     public ResponseEntity<PartItem> findObjectByName(@PathVariable String name){
         return new ResponseEntity<>(service.getByName(name),HttpStatus.OK);
     }
     //GET ALL / READ
-    @GetMapping("/PartItems")
+    @GetMapping("/all")
     public ResponseEntity<List<PartItem>> findAllPartItems(){
         return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
     }
     //UPDATE / PUT
-    @PutMapping("/update")
-    public ResponseEntity<PartItem> updateObject(@RequestBody PartItem object){
+    @PutMapping("/update/{id}")
+    public ResponseEntity<PartItem> updateObject(@RequestBody PartItem object, @PathVariable Long id){
         return new ResponseEntity<>(service.checkIfExists(object), HttpStatus.OK);
     }
     //DELETE

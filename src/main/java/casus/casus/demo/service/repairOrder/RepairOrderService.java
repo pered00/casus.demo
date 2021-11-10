@@ -10,7 +10,7 @@ public interface RepairOrderService {
     //POST list / Create list
     List<RepairOrder> saveObjects(List<RepairOrder> objects);
     //GET ID / READ / Find by ID EASY
-    RepairOrder getObjectByID (Long id);
+    RepairOrderDTO getObjectByID (Long id);
     //GET ALL / READ
     List<RepairOrder> findAll();
     //UPDATE / PUT

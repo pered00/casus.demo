@@ -27,8 +27,8 @@ public class RepairOrderController {
         return new ResponseEntity<>(service.saveObjects(objects), HttpStatus.OK);
     }
     //GET ID / READ / Find by ID EASY
-    @GetMapping("/{id}")
-    public ResponseEntity<RepairOrder> findObjectById(@PathVariable Long id){
+    @GetMapping("/id/{id}")
+    public ResponseEntity<RepairOrderDTO> findObjectById(@PathVariable Long id){
         return new ResponseEntity<>(service.getObjectByID(id), HttpStatus.OK);
     }
 
@@ -39,8 +39,8 @@ public class RepairOrderController {
         return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
     }
     //UPDATE / PUT
-    @PutMapping("/update/{id)")
-    public ResponseEntity<RepairOrderDTO> updateObject(@RequestBody RepairOrderDTO object,@PathVariable Long id){
+    @PutMapping(path="/update")
+    public ResponseEntity<RepairOrderDTO> updateObject(@RequestBody RepairOrderDTO object){
         return new ResponseEntity<>(service.saveObject(object), HttpStatus.OK);
     }
     //DELETE

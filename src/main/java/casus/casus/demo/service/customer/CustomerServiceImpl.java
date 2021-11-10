@@ -14,47 +14,25 @@ import java.util.Optional;
 public class CustomerServiceImpl implements CustomerService {
     @Autowired
     CustomerRepository repository;
-    //POST / Create
+    //POST-PUT (create-update)
     @Override
     public Customer saveObject(Customer object) {
         return repository.save(object);
     }
-    //POST list / Create list
-    @Override
-    public List<Customer> saveObjects(List<Customer> objects) {
-        return repository.saveAll(objects);
-    }
-
-    //GET ID / READ / Find by ID EASY
+    //GET ID
     @Override
     public Customer getObjectByID (Long id){
         return repository.findById(id).orElse(null);
     }
-    //GET ByName/ READ
+    //GET NAME
     @Override
     public Customer getByName(String name){
         return repository.findByName(name);
     }
-    //GET ALL / READ
+    //GET ALL
     @Override
     public List<Customer> findAll() {
         return repository.findAll();
-    }
-    //UPDATE / PUT
-    @Override
-    public Customer checkIfExists (Customer object){
-        if (Long.valueOf(object.getId()) != null){
-            Optional<Customer> existingObject= repository.findById(object.getId());
-            if (existingObject.isPresent()){
-                return saveObject(object);
-            }
-            else{
-                return new Customer();
-            }
-        }
-        else{
-            return saveObject(object);
-        }
     }
     //DELETE
     @Override
@@ -62,4 +40,21 @@ public class CustomerServiceImpl implements CustomerService {
         repository.deleteById(id);
         return "Object removed!"+id;
     }
+
+    //    UPDATE
+//    @Override
+//    public Customer checkIfExists (Customer object){
+//        if (Long.valueOf(object.getId()) != null){
+//            Optional<Customer> existingObject= repository.findById(object.getId());
+//            if (existingObject.isPresent()){
+//                return saveObject(object);
+//            }
+//            else{
+//                return new Customer();
+//            }
+//        }
+//        else{
+//            return saveObject(object);
+//        }
+//    }
 }
