@@ -31,6 +31,7 @@ public class RepairOrder {
     private Customer customer;
     private Double totalPriceExTax;
     private Double totalPriceInTax;
+
     private Double totalTaxAmount;
 
 

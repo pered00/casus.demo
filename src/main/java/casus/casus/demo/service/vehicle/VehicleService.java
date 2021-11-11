@@ -1,6 +1,5 @@
 package casus.casus.demo.service.vehicle;
 
-import casus.casus.demo.dto.VehicleDTO;
 import casus.casus.demo.model.Vehicle;
 
 import java.util.List;

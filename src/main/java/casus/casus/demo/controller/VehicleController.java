@@ -1,9 +1,7 @@
 package casus.casus.demo.controller;
 
-import casus.casus.demo.dto.VehicleDTO;
 import casus.casus.demo.model.Vehicle;
 import casus.casus.demo.service.vehicle.VehicleService;
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

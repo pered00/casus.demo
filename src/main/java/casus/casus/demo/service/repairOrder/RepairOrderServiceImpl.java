@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class RepairOrderServiceImpl implements RepairOrderService {
@@ -80,11 +79,11 @@ public class RepairOrderServiceImpl implements RepairOrderService {
         return repository.saveAll(objects);
     }
 
-    //GET ID / READ / Find by ID EASY
+    //GET ID
     @Override
     public RepairOrderDTO getObjectByID (Long id){
         final Double taxRate = 1.21;
-        List<Double> sumValue = new ArrayList<>();
+
         RepairOrder repairOrder = repository.findById(id).orElse(null);
         RepairOrderDTO repairOrderDTO = new RepairOrderDTO();
         repairOrderDTO.setId(repairOrder.getId());
@@ -96,24 +95,72 @@ public class RepairOrderServiceImpl implements RepairOrderService {
         repairOrderDTO.setRepairDate(repairOrder.getRepairDate());
         repairOrderDTO.setFindings(repairOrder.getFindings());
         repairOrderDTO.setAgreementNotes(repairOrder.getAgreementNotes());
-        List<PartItem> partItemsList= new ArrayList<>();
-        repairOrderDTO.setTotalPriceExTax(0.0);
-        repairOrder.getUsedItems().forEach(obj ->{
-           sumValue.add(obj.getId().getPartItem().getSellingPrice());
-           partItemsList.add(obj.getId().getPartItem());
-        });
-           repairOrderDTO.setUsedItems(partItemsList);
-        List<ServiceItem> serviceItemsList= new ArrayList<>();
-        repairOrder.getUsedServices().forEach(obj ->{
-            sumValue.add(obj.getId().getServiceItem().getSellingPrice());
-            serviceItemsList.add(obj.getId().getServiceItem());
-        });
-        repairOrderDTO.setUsedServices(serviceItemsList);
-        sumValue.forEach(value -> {
-            repairOrderDTO.setTotalPriceExTax(repairOrderDTO.getTotalPriceExTax()+value);
-        });
-        repairOrderDTO.setTotalPriceExTax(repairOrderDTO.getTotalPriceExTax()*taxRate);
+
+        List<PartItemOrderList> partItemOrderList = getListRepairOrderItems(repairOrder.getId());
+        List<PartItem> partItemsList = getListPartItem(partItemOrderList);
+        repairOrderDTO.setUsedItems(partItemsList);
+
+        repairOrderDTO.setUsedServices(getListServiceItem(getListRepairOrderServices(repairOrder.getId())));
+
+        Double totalItems = getTotalItems(repairOrderDTO.getUsedItems());
+        Double totalServices = getTotalServices(repairOrderDTO.getUsedServices());
+
+        repairOrderDTO.setTotalPriceInTax((totalItems + totalServices) * taxRate);
+        repairOrderDTO.setTotalPriceExTax(totalItems + totalServices);
+        repairOrderDTO.setTotalTaxAmount(repairOrderDTO.getTotalPriceInTax()-repairOrderDTO.getTotalPriceExTax());
         return repairOrderDTO;
+    }
+
+    //haalt lijst van partItem uit SQL via repository
+    private List<PartItemOrderList> getListRepairOrderItems(Long repairOrderId){
+        List<PartItemOrderList> listPartItemOrder = partItemOrderListRepository.findAllByRepairOrderId(repairOrderId);
+        return listPartItemOrder;
+    }
+
+    private  List<ServiceItemOrderList> getListRepairOrderServices(Long repairOrderId){
+        List<ServiceItemOrderList> serviceItemOrderList = serviceItemOrderListRepository.findAllByRepairOrderId(repairOrderId);
+        return serviceItemOrderList;
+    }
+
+    //vertaalt de tabel uit SQL naar een lijst met partItems objecten
+    private List<PartItem> getListPartItem(List<PartItemOrderList> partItemOrderList){
+        List<PartItem> listPartItems = new ArrayList<>();
+
+        partItemOrderList.forEach(obj -> {
+            listPartItems.add(obj.getId().getPartItem());
+        });
+
+        return listPartItems;
+    }
+
+    private List<ServiceItem> getListServiceItem(List<ServiceItemOrderList> serviceItemOrderList){
+        List<ServiceItem> listServiceItem = new ArrayList<>();
+
+        serviceItemOrderList.forEach(obj -> {
+            listServiceItem.add(obj.getId().getServiceItem());
+        });
+
+        return listServiceItem;
+    }
+    //totaalprijs berekenen van de aantal item in lijst
+    private Double getTotalItems(List<PartItem> usedItems) {
+        Double total = 0.0;
+
+        for(PartItem obj: usedItems) {
+            total += obj.getSellingPrice();
+        }
+
+        return total;
+    }
+
+    private Double getTotalServices(List<ServiceItem> serviceItems) {
+        Double total = 0.0;
+
+        for(ServiceItem obj: serviceItems) {
+            total += obj.getSellingPrice();
+        }
+
+        return total;
     }
 
     //GET ALL / READ
