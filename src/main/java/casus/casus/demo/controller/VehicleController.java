@@ -49,17 +49,7 @@ public class VehicleController {
         return new ResponseEntity<>(service.updateVehicle(object), HttpStatus.OK);
 
     }
-        /*
-        Vehicle vehicle = service.updateVehicle(object);
-        if (vehicle != null){
-            return new ResponseEntity<>(vehicle, HttpStatus.OK);
-        }
-        else {
-            return new ResponseEntity<>("VehicleID doesn't exists, Vehicle update not possible", HttpStatus.NOT_FOUND);
-        }
-    }
 
-         */
     //DELETE
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteObject(@RequestBody Long id){
