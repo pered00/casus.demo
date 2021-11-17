@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -19,7 +20,7 @@ public class VehicleController {
     // * Before creating Vehicle, check if Customer exists.
     // * If not use exception to return error, customer must be created first
     @PostMapping("/create/{customerID}")
-    public ResponseEntity<?> addObject(@RequestBody Vehicle object, @PathVariable Long customerID){
+    public ResponseEntity<?> addObject(@Valid @RequestBody Vehicle object, @PathVariable Long customerID){
         Vehicle vehicle = service.saveObject(object, customerID);
         if (vehicle != null){
             return new ResponseEntity<>(vehicle, HttpStatus.CREATED);

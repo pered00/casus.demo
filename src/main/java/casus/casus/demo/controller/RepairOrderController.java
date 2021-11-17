@@ -1,6 +1,7 @@
 package casus.casus.demo.controller;
 
 import casus.casus.demo.dto.RepairOrderDTO;
+import casus.casus.demo.model.OrderStatus;
 import casus.casus.demo.model.RepairOrder;
 import casus.casus.demo.service.repairOrder.RepairOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +33,17 @@ public class RepairOrderController {
         return new ResponseEntity<>(service.getObjectByID(id), HttpStatus.OK);
     }
 
-
     //GET ALL / READ
     @GetMapping("/all")
     public ResponseEntity<List<RepairOrder>> findAllRepairOrders(){
         return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
     }
+    //GET by Status
+    @GetMapping("/status/{status}")
+    public ResponseEntity<List<RepairOrder>> getByStatus(@PathVariable OrderStatus status) {
+        return new ResponseEntity<List<RepairOrder>>(service.getByStatus(status), HttpStatus.OK);
+    }
+
     //UPDATE / PUT
     @PutMapping(path="/update")
     public ResponseEntity<RepairOrderDTO> updateObject(@RequestBody RepairOrderDTO object){

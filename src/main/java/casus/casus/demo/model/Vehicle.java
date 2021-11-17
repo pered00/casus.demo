@@ -1,10 +1,11 @@
 package casus.casus.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.Year;
 
 @Getter
@@ -19,7 +20,8 @@ public class Vehicle {
     @GeneratedValue
     private Long id;
     @Column(unique = true)
-    @NotNull
+    @NotNull(message = "licPlate is required")
+    @NotBlank
     private String licPlate;
     private String brand;
     private String model;

@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 @Setter
 @NoArgsConstructor
 public class PartItemOrderList {
+    //all attributes in PartItem ID are primary key
     @EmbeddedId
     private PartItemID id;
 }

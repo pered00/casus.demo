@@ -18,7 +18,7 @@ public class UserController {
     //POST / Create
     @PostMapping("/create")
     public ResponseEntity<User> addObject(@RequestBody User object){
-        return new ResponseEntity<>(service.checkIfExists(object), HttpStatus.CREATED);
+        return new ResponseEntity<>(service.saveObject(object), HttpStatus.CREATED);
     }
     //POST list / Create list
     @PostMapping("/create/list")

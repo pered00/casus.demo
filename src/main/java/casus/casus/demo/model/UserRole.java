@@ -20,6 +20,7 @@ public class UserRole implements GrantedAuthority {
     private Long id;
     private String role;
 
+
     @Override
     public String getAuthority() {
         return role;

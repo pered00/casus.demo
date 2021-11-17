@@ -20,7 +20,8 @@ public class RepairOrder {
     @Id
     @GeneratedValue
     private Long id;
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
     private LocalDate startDate;
     private LocalDate inspectionDate;
     private LocalDate repairDate;

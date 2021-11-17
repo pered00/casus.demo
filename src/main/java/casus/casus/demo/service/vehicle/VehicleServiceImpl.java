@@ -45,55 +45,22 @@ public class VehicleServiceImpl implements VehicleService{
     public Vehicle getObjectByID (Long id){
         return repository.findById(id).orElse(null);
     }
+
     //GET LicPlate / READ / Find by licPlate
     public Vehicle getObjectBylicPlate (String licPlate){
         return repository.findByLicPlate(licPlate);
-
-
-//        Vehicle v= repository.findByLicPlate(licPlate);
-//        VehicleDTO v2= new VehicleDTO(
-//                v.getId(),
-//                v.getLicPlate(),
-//                v.getDocument().getId(),
-//                v.getBrand(),
-//                v.getModel(),
-//                v.getBuildYear(),
-//                v.getMileage(),
-//                v.getCustomer()
-//        );
-//        return v2;
     }
 
     //GET ALL / READ
     @Override
     public List<Vehicle> findAll() {
         return repository.findAll();
-
-//        List<Vehicle> vlist = repository.findAll();
-//        List<VehicleDTO> dList = new ArrayList<>();
-//        vlist.forEach(vehicle -> {
-//            VehicleDTO dto = new VehicleDTO();
-//            dto.setId(vehicle.getId());
-//            dto.setLicPlate(vehicle.getLicPlate());
-//            dto.setDocumentId(vehicle.getDocument().getId());
-//            dList.add(dto);
-//        });
-//        return dList;
     }
 
     //UPDATE / PUT
     @Override
     public Vehicle updateVehicle (Vehicle object) {
         return repository.save(object);
-//        if (object.getId() != null) {
-//            Optional<Vehicle> existingObject = repository.findById(object.getId());
-//            if (existingObject.isPresent()) {
-//                return repository.save(object);
-//            } else {
-//                return null;
-//            }
-//        }
-//        return null;
     }
 
     //DELETE

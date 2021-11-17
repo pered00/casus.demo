@@ -29,13 +29,12 @@ public class User implements UserDetails {
     private String userName;
     private String password;
     private boolean active;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<UserRole> userRole = new ArrayList<>();
+   @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<UserRole> userRole;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.userRole;
+        return (Collection<? extends GrantedAuthority>) this.userRole;
     }
 
     @Override

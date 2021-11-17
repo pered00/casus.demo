@@ -1,6 +1,7 @@
 package casus.casus.demo.service.repairOrder;
 
 import casus.casus.demo.dto.RepairOrderDTO;
+import casus.casus.demo.model.OrderStatus;
 import casus.casus.demo.model.RepairOrder;
 import java.util.List;
 
@@ -9,12 +10,15 @@ public interface RepairOrderService {
     RepairOrderDTO saveObject(RepairOrderDTO object);
     //POST list / Create list
     List<RepairOrder> saveObjects(List<RepairOrder> objects);
-    //GET ID / READ / Find by ID EASY
+    //GET ID
     RepairOrderDTO getObjectByID (Long id);
-    //GET ALL / READ
+    //GET ALL
     List<RepairOrder> findAll();
-    //UPDATE / PUT
+    //GET list By Status
+    List<RepairOrder> getByStatus (OrderStatus status);
+    //UPDATE
     RepairOrder checkIfExists(RepairOrder object);
     //DELETE
     String deleteObject(Long id);
+
 }

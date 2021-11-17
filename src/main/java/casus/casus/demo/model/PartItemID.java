@@ -15,6 +15,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class PartItemID implements Serializable {
 
+    //alle velden zijn key van PartItmeOrderList table. @Embeddable zorgt dat deze hiervoor gebruikt wordt.
     @ManyToOne
     @JoinColumn(name = "part_item_id", referencedColumnName = "id")
     private PartItem partItem;

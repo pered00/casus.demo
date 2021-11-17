@@ -116,7 +116,6 @@ public class RepairOrderServiceImpl implements RepairOrderService {
         List<PartItemOrderList> listPartItemOrder = partItemOrderListRepository.findAllByRepairOrderId(repairOrderId);
         return listPartItemOrder;
     }
-
     private  List<ServiceItemOrderList> getListRepairOrderServices(Long repairOrderId){
         List<ServiceItemOrderList> serviceItemOrderList = serviceItemOrderListRepository.findAllByRepairOrderId(repairOrderId);
         return serviceItemOrderList;
@@ -168,23 +167,17 @@ public class RepairOrderServiceImpl implements RepairOrderService {
     public List<RepairOrder> findAll() {
         return repository.findAll();
     }
+
+    //GET list By Status
+    public List<RepairOrder> getByStatus (OrderStatus status){
+        return repository.findByStatus(status);
+    }
     //UPDATE / PUT
     @Override
     public RepairOrder checkIfExists (RepairOrder object){
         return null;
-//        if (Long.valueOf(object.getId()) != null){
-//            Optional<RepairOrder> existingObject= repository.findById(object.getId());
-//            if (existingObject.isPresent()){
-//                return saveObject(object);
-//            }
-//            else{
-//                return new RepairOrder();
-//            }
-//        }
-//        else{
-//            return saveObject(object);
-//        }
     }
+
     //DELETE
     @Override
     public String deleteObject(Long id) {
