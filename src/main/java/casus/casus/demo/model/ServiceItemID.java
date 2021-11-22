@@ -2,7 +2,6 @@ package casus.casus.demo.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
 
 import javax.persistence.Embeddable;
