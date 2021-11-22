@@ -11,8 +11,7 @@ import javax.persistence.Entity;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PartItemOrderList {
-    //all attributes in PartItem ID are primary key
+public class ServiceItemOrderJoinColumn {
     @EmbeddedId
-    private PartItemID id;
+    private ServiceItemID id;
 }
