@@ -39,9 +39,9 @@ public class RepairOrder {
     @OneToOne
     private Vehicle vehicle;
     @OneToMany(mappedBy = "id.partItem")
-    private List<PartItemOrderJoinColumn> usedItems;
+    private List<PartItemOrderList> usedItems;
     @OneToMany(mappedBy = "id.serviceItem")
-    private List<ServiceItemOrderJoinColumn> usedServices;
+    private List<ServiceItemOrderList> usedServices;
 
 
 

@@ -49,27 +49,27 @@ public class RepairOrderServiceImpl implements RepairOrderService {
 
         final RepairOrder r = repairOrder;
         object.getUsedItems().forEach(obj -> {
-            PartItemOrderJoinColumn partItemOrderJoinColumn = new PartItemOrderJoinColumn();
+            PartItemOrderList partItemOrderList = new PartItemOrderList();
             PartItemID partItemID = new PartItemID();
 
             partItemID.setPartItem(obj);
             partItemID.setRepairOrder(r);
 
-            partItemOrderJoinColumn.setId(partItemID);
+            partItemOrderList.setId(partItemID);
 
-            partItemOrderListRepository.save(partItemOrderJoinColumn);
+            partItemOrderListRepository.save(partItemOrderList);
         });
 
         object.getUsedServices().forEach(obj ->{
-            ServiceItemOrderJoinColumn serviceItemOrderJoinColumn = new ServiceItemOrderJoinColumn();
+            ServiceItemOrderList serviceItemOrderList = new ServiceItemOrderList();
             ServiceItemID serviceItemID = new ServiceItemID();
 
             serviceItemID.setServiceItem(obj);
             serviceItemID.setRepairOrder(r);
 
-            serviceItemOrderJoinColumn.setId(serviceItemID);
+            serviceItemOrderList.setId(serviceItemID);
 
-            serviceItemOrderListRepository.save(serviceItemOrderJoinColumn);
+            serviceItemOrderListRepository.save(serviceItemOrderList);
         });
                 return object;
     }
@@ -96,14 +96,11 @@ public class RepairOrderServiceImpl implements RepairOrderService {
         repairOrderDTO.setFindings(repairOrder.getFindings());
         repairOrderDTO.setAgreementNotes(repairOrder.getAgreementNotes());
 
-        //lijst met met items die horen bij deze RepairItems uit de tussentabel RepairOrderItems halen, deze worden dan op een DTO gezet om te kunnen tonen
-        List<PartItemOrderJoinColumn> partItemOrderJoinColumn = getListRepairOrderItems(repairOrder.getId());
-        List<PartItem> partItemsList = getListPartItem(partItemOrderJoinColumn);
+        List<PartItemOrderList> partItemOrderList = getListRepairOrderItems(repairOrder.getId());
+        List<PartItem> partItemsList = getListPartItem(partItemOrderList);
         repairOrderDTO.setUsedItems(partItemsList);
 
-        List<ServiceItemOrderJoinColumn> serviceItemOrderJoinColumn = getListRepairOrderServices(repairOrder.getId());
-        List<ServiceItem> serviceItemsList = getListServiceItem(serviceItemOrderJoinColumn);
-        repairOrderDTO.setUsedServices(serviceItemsList);
+        repairOrderDTO.setUsedServices(getListServiceItem(getListRepairOrderServices(repairOrder.getId())));
 
         Double totalItems = getTotalItems(repairOrderDTO.getUsedItems());
         Double totalServices = getTotalServices(repairOrderDTO.getUsedServices());
@@ -115,29 +112,30 @@ public class RepairOrderServiceImpl implements RepairOrderService {
     }
 
     //haalt lijst van partItem uit SQL via repository
-    private List<PartItemOrderJoinColumn> getListRepairOrderItems(Long repairOrderId){
-        List<PartItemOrderJoinColumn> PartItemOrderJoinColumn = partItemOrderListRepository.findAllByRepairOrderId(repairOrderId);
-        return PartItemOrderJoinColumn;
+    private List<PartItemOrderList> getListRepairOrderItems(Long repairOrderId){
+        List<PartItemOrderList> listPartItemOrder = partItemOrderListRepository.findAllByRepairOrderId(repairOrderId);
+        return listPartItemOrder;
     }
-    private  List<ServiceItemOrderJoinColumn> getListRepairOrderServices(Long repairOrderId){
-        List<ServiceItemOrderJoinColumn> serviceItemOrderJoinColumn = serviceItemOrderListRepository.findAllByRepairOrderId(repairOrderId);
-        return serviceItemOrderJoinColumn;
+    private  List<ServiceItemOrderList> getListRepairOrderServices(Long repairOrderId){
+        List<ServiceItemOrderList> serviceItemOrderList = serviceItemOrderListRepository.findAllByRepairOrderId(repairOrderId);
+        return serviceItemOrderList;
     }
 
     //vertaalt de tabel uit SQL naar een lijst met partItems objecten
-    private List<PartItem> getListPartItem(List<PartItemOrderJoinColumn> partItemOrderJoinColumn){
+    private List<PartItem> getListPartItem(List<PartItemOrderList> partItemOrderList){
         List<PartItem> listPartItems = new ArrayList<>();
 
-        partItemOrderJoinColumn.forEach(obj -> {
+        partItemOrderList.forEach(obj -> {
             listPartItems.add(obj.getId().getPartItem());
         });
+
         return listPartItems;
     }
 
-    private List<ServiceItem> getListServiceItem(List<ServiceItemOrderJoinColumn> serviceItemOrderJoinColumn){
+    private List<ServiceItem> getListServiceItem(List<ServiceItemOrderList> serviceItemOrderList){
         List<ServiceItem> listServiceItem = new ArrayList<>();
 
-        serviceItemOrderJoinColumn.forEach(obj -> {
+        serviceItemOrderList.forEach(obj -> {
             listServiceItem.add(obj.getId().getServiceItem());
         });
 
